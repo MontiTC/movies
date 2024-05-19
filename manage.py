@@ -8,7 +8,7 @@ def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mymovies.settings')
     load_dotenv("./.env")
-    print(os.getenv("NAME"))
+    print(os.getenv("TOKEN"))
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

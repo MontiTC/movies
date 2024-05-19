@@ -1,0 +1,23 @@
+{% extends "movies/base.html" %}
+
+{% block article %}
+<a href="your_name/"> Pon tu nombre</a>
+
+{% if movie_list %}
+    <ul>
+    {% for movie in movie_list %}
+        <li>
+            <a hx-get="/movies/{{ movie.id }}/" hx-target="#movie-detail" hx-swap="innerHTML">
+                {{ movie.title }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No movies are available.</p>
+{% endif %}
+
+<div id="movie-detail">
+    <!-- Aquí se cargará la información de la película seleccionada -->
+</div>
+{% endblock %}

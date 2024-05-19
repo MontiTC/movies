@@ -1,0 +1,113 @@
+{% load movie_extras %}
+{% block article %}
+<div class="flex h-[32rem] bg-slate-200 my-4">
+            <img class="" src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" alt="the imitation game poster">
+            <header>
+            <h1 class="movie-title"> {{movie.title}}</h1>
+            <div class="movie-info">
+                <p>  {{movie.release_date|date:"Y"}} -</p>
+                 <h1>Genres:</h1>
+                <ul class="movie-genre">
+                {% for genre in movie.genres.all %}
+                    <li>    {{ genre.name }}{% if not forloop.last %} {% endif %}</li>
+                {% endfor %}
+            </ul>
+                <h1>Run Time:  {{ movie.running_time|duration_to_hms }}</h1>
+                <p></p>  
+            </div>         
+            <br>
+            <h1>Overview</h1>
+            
+            <p>{{movie.overview}}</p>
+                
+            <br>
+            <h1>Production Details</h1>
+            <p> Budget: {{movie.budget}} </p>
+            <p> Revenue: {{movie.revenue}} </p>
+            
+            </header>
+            
+        </div>
+        <div class="reviews my-4">
+    <h2>Reseñas</h2>
+    <div class="review-container">
+        {% for review in reviews %}
+        <div class="review">
+            <p><strong>{{ review.user.username }}</strong> dijo:</p>
+            <p>Rating: {{ review.rating }} / 100</p>
+            <p>{{ review.review }}</p>
+            <p><small>Publicado el {{ review.created_at }}</small></p>
+        </div>
+        {% empty %}
+        <p>No hay reseñas todavía. ¡Sé el primero en dejar una!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="add-review my-4">
+    <h2>Añadir una reseña</h2>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'create_review' movie_id=movie.id %}" class="review-form"">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-button">Enviar</button>
+    </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar una reseña.</p>
+    {% endif %}
+    
+</div>
+<style>
+        /* Estilos para la sección de reseñas */
+        .reviews {
+            margin-top: 20px;
+        }
+
+        .review-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .review {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* Estilos para el formulario de reseñas */
+        .add-review {
+            margin-top: 20px;
+        }
+
+        .review-form {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .login-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+        
+{% endblock %}

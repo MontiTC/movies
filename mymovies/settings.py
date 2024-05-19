@@ -27,7 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['54.144.40.104']
 
+# settings.py
 
+# Configuración de la plantilla de inicio de sesión personalizada
+LOGIN_TEMPLATE = 'login.html'
+LOGIN_REDIRECT_URL = '/movies/'
 
 # Application definition
 
