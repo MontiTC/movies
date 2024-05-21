@@ -14,6 +14,8 @@ urlpatterns = [
     path("your_name/", views.get_name, name="get_name"),
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
     path('movies/<int:movie_id>/review/', create_review, name='create_review'),
-    
+    path('actor/<int:actor_id>/movies/', views.actor_movies, name='actor_movies'),
+    path('', views.index, name='index'),
+
     
     ]

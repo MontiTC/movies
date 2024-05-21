@@ -1,0 +1,110 @@
+{% extends "movies/base.html" %}
+
+{% block article %}
+<div class="container">
+    <h1>Movies</h1>
+    <h1 class="text-center my-4">Películas de {{ actor.name }}</h1>
+    <ul class="list-group">
+        {% for movie in movies %}
+            <li class="list-group-item">
+                <a href="{% url 'movie_detail' movie_id=movie.id %}" class="text-decoration-none text-dark">{{ movie.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    
+</div>
+{% endblock %}
+<style>
+        /* Estilos para la sección de reseñas */
+        .reviews {
+            margin-top: 20px;
+        }
+
+        .review-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .review {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* Estilos para el formulario de reseñas */
+        .add-review {
+            margin-top: 20px;
+        }
+
+        .review-form {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .login-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        .actor-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+             margin: 1rem;
+        }
+
+        .actor-photo {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+        }
+        .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.list-group {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-group-item {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 10px;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+a {
+    color: #343a40;
+}
+
+a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    </style>
+
