@@ -1,21 +1,33 @@
 {% extends "movies/base.html" %}
 
 {% block article %}
-<a href="your_name/"> Pon tu nombre</a>
 
 {% if movie_list %}
-    <ul>
+    <div id="movie_list" class="flex flex-wrap ">
     {% for movie in movie_list %}
-        <li>
-            <a hx-get="/movies/{{ movie.id }}/" hx-target="#movie-detail" hx-swap="innerHTML">
-                {{ movie.title }}
-            </a>
-        </li>
+        <div class="flex-none w-48 h-full bg-green-600 sm:w-48 sm:h-96 mx-2 my-4">
+            
+            <img class="h-4/6 w-4/6 sm:w-48 sm:h-4/6 rounded-lg" 
+            src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" 
+            alt="{{movie.title}} poster">
+            
+            <div class="h-2/6 p-2">
+               <h1 class="text-wrap text ellipsis"> <a class="mt-2" href="/movies/{{ movie.id }}/"> {{ movie.title }}</a> </h1> 
+            <p class="text-nowrap p-2">
+                {{ movie.release_date|date:"F Y" }}
+            </p>
+            </div>
+            
+        </div>
+        
+        
     {% endfor %}
-    </ul>
-{% else %}
-    <p>No movies are available.</p>
+    </div>
+
+    
 {% endif %}
+
+
 
 <div id="movie-detail">
     <!-- Aquí se cargará la información de la película seleccionada -->

@@ -1,3 +1,4 @@
+{% extends "movies/base.html" %}
 {% load movie_extras %}
 {% block article %}
 <div class="flex h-[32rem] bg-slate-200 my-4">
@@ -6,7 +7,7 @@
             <header>
             <h1 class="movie-title"> {{movie.title}}</h1>
             <div class="movie-info">
-                <p>  {{movie.release_date|date:"Y"}} -</p>
+                <p>  {{ movie.release_date|date:"F d, Y" }} -</p>
                  <h1>Genres:</h1>
                 <ul class="movie-genre">
                 {% for genre in movie.genres.all %}

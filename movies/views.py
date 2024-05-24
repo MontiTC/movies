@@ -37,7 +37,7 @@ def movie_detail(request, movie_id):
     genre_ids = [genre.id for genre in movie.genres.all()]
     recommended_movies = Movie.objects.filter(
         ~Q(id=movie_id) & (Q(genres__in=movie.genres.all()) | Q(genres__isnull=True))
-    ).distinct().exclude(genres__id__in=[g.id for g in movie.genres.exclude(id__in=genre_ids)])[:5]
+    ).distinct().exclude(genres__id__in=[g.id for g in movie.genres.exclude(id__in=genre_ids)])[:8]
 
     if request.method == 'POST':
         form = MovieReviewForm(request.POST)
