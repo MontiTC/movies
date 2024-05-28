@@ -1,33 +1,27 @@
 {% extends "movies/base.html" %}
 
+{% block styles %}
+   
+{% endblock %}
+
 {% block article %}
 
 {% if movie_list %}
-    <div id="movie_list" class="flex flex-wrap ">
+    <div id="movie_list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-900 text-white rounded-lg overflow-hidden shadow-md py-4">
     {% for movie in movie_list %}
-        <div class="flex-none w-48 h-full bg-green-600 sm:w-48 sm:h-96 mx-2 my-4">
-            
-            <img class="h-4/6 w-4/6 sm:w-48 sm:h-4/6 rounded-lg" 
-            src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" 
-            alt="{{movie.title}} poster">
-            
-            <div class="h-2/6 p-2">
-               <h1 class="text-wrap text ellipsis"> <a class="mt-2" href="/movies/{{ movie.id }}/"> {{ movie.title }}</a> </h1> 
-            <p class="text-nowrap p-2">
-                {{ movie.release_date|date:"F Y" }}
-            </p>
+        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:bg-gray-700">
+            <img class="h-50 w-full object-cover rounded-t-lg mx-auto pointer" src="https://media.themoviedb.org/t/p/w500/{{movie.poster_path}}" alt="{{movie.title}} poster" onclick="location.href='/movies/{{ movie.id }}/';">
+            <div class="p-4">
+                <h1 class="text-xl font-bold mb-2">
+                    <a class="hover:underline" href="/movies/{{ movie.id }}/">{{ movie.title }}</a>
+                </h1>
+                <p class="text-gray-400">{{ movie.release_date|date:"F Y" }}</p>
             </div>
-            
         </div>
-        
-        
     {% endfor %}
     </div>
 
-    
 {% endif %}
-
-
 
 <div id="movie-detail">
     <!-- Aquí se cargará la información de la película seleccionada -->

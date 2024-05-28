@@ -1,61 +1,82 @@
 {% extends "movies/base.html" %}
 {% load movie_extras %}
 {% block article %}
-<div class="flex h-[32rem] bg-slate-200 my-4">
-            
-            <img class="" src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" alt="the imitation game poster">
-            <header>
-            <h1 class="movie-title"> {{movie.title}}</h1>
-            <div class="movie-info">
-                <p>  {{ movie.release_date|date:"F d, Y" }} -</p>
-                 <h1>Genres:</h1>
-                <ul class="movie-genre">
+<img class="w-full h-99 object-cover rounded-lg mb-4 mt-2" src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{movie.poster_path}}" alt="the imitation game poster">
+<div class="bg-gray-800 p-4 rounded-lg shadow-md">
+    <header>
+        <h1 class="movie-title text-3xl font-bold mb-2 text-white">{{movie.title}}</h1>
+        <div class="movie-info">
+            <p class="text-white">  {{ movie.release_date|date:"F d, Y" }} -</p>
+            <h1 class="text-lg font-bold text-white">Genres:</h1>
+            <ul class="movie-genre list-none mb-2">
                 {% for genre in movie.genres.all %}
-                    <li>    {{ genre.name }}{% if not forloop.last %} {% endif %}</li>
+                    <li class="inline-block mr-2 text-white">{{ genre.name }}{% if not forloop.last %}, {% endif %}</li>
                 {% endfor %}
             </ul>
-                <h1>Run Time:  {{ movie.running_time|duration_to_hms }}</h1>
-                <p></p>  
-            </div>         
-            <br>
-            <h1>Overview</h1>
-            
-            <p>{{movie.overview}}</p>
-                
-            <br>
-            <h1>Production Details</h1>
-            <p> Budget: {{movie.budget}} dlls</p>
-            <p> Revenue: {{movie.revenue}} dlls</p>
-            <br>
-            
-    </ul>
-</div>
+            <h1 class="text-lg font-bold text-white">Run Time:</h1>
+            <p class="text-white">{{ movie.running_time|duration_to_hms }}</p>
+            <p class="text-white"></p>  
+        </div>         
+        <br>
+        <h1 class="text-lg font-bold text-white">Overview</h1>
+        <p class="text-white">{{movie.overview}}</p>
+        <br>
+        <h1 class="text-lg font-bold text-white">Production Details</h1>
+        <p class="text-white">Budget: {{movie.budget}} dlls</p>
+        <p class="text-white">Revenue: {{movie.revenue}} dlls</p>
+        <br>
+    </header>
 </div>
 
-       
+  
 </header>
-<h1>Recommended Movies</h1>
-    <ul class="movie-genre">
-        {% for recommended_movie in recommended_movies %}
-            <li>{{ recommended_movie.title }}</li>
-        {% empty %}
-            <li>No recommended movies found.</li>
-        {% endfor %}
-<div class="actors-container">
-    <h1>Actors</h1>
-    <ul class="movie-actors">
-        {% for credit in credits %}
-            <li class="actor-item">
-                <span>&#8226;</span>
-                <a href="{% url 'actor_movies' actor_id=credit.person.id %}">{{ credit.person.name }}</a> as {{ credit.job.name }}
-            </li>
-        {% endfor %}
-    </ul>
+
+
+
+<div class="recommended-movies-container bg-gray-800 p-4 rounded-lg shadow-md mt-4">
+    <h1 class="text-2xl font-bold mb-2">Recommended Movies</h1>
+    <div class="carousel-container h-96 overflow-y-auto">
+        <div class="carousel relative overflow-hidden p-4">
+            <div class="carousel-inner flex flex-nowrap overflow-x-auto">
+                {% for recommended_movie in recommended_movies %}
+                    <div class="carousel-item w-40 h-80 mr-4 flex-shrink-0"> 
+                        <a href="{% url 'movie_detail' recommended_movie.id %}">
+                            <img class="w-full h-full object-cover rounded-lg" src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/{{recommended_movie.poster_path}}" alt="{{recommended_movie.title}} poster">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-prev absolute top-0 left-0 z-10 p-2 text-gray-600 hover:text-gray-900" aria-label="Previous">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button class="carousel-next absolute top-0 right-0 z-10 p-2 text-gray-600 hover:text-gray-900" aria-label="Next">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="actors-container bg-gray-800 p-4 rounded-lg shadow-md mt-4">
+    <h1 class="text-2xl font-bold mb-2">Actores</h1>
+    <div class="carousel carousel-slider">
+        <div class="carousel-item">
+            {% for credit in credits %}
+                <div class="actor-item text-gray-300 hover:text-gray-100 transition duration-150 ease-in-out flex items-center">
+                    <img class="w-12 h-12 rounded-full mr-4" src="{% if credit.person.profile_path %}https://image.tmdb.org/t/p/w185/{{ credit.person.profile_path }}{% else %}images/missing.png{% endif %}" alt="{{ credit.person.name }} profile">
+                    <a class="underline" href="{% url 'actor_movies' actor_id=credit.person.id %}">{{ credit.person.name }}</a> 
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 
+
             
-        </div>
+       
         <div class="reviews my-4">
     <h2>Reseñas</h2>
     <div class="review-container">
@@ -85,69 +106,7 @@
     {% endif %}
     
 </div>
-<style>
-        /* Estilos para la sección de reseñas */
-        .reviews {
-            margin-top: 20px;
-        }
 
-        .review-container {
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .review {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .review:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        /* Estilos para el formulario de reseñas */
-        .add-review {
-            margin-top: 20px;
-        }
-
-        .review-form {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        .submit-button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        .login-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .login-link:hover {
-            text-decoration: underline;
-        }
-        .actor-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-             margin: 1rem;
-        }
-
-        .actor-photo {
-            width: 6rem;
-            height: 6rem;
-            border-radius: 50%;
-        }
-    </style>
 
         
 {% endblock %}

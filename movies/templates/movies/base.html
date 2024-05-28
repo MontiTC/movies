@@ -9,13 +9,13 @@
         <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
         
     </head>
-    <body class="font-sans max-w-4xl mx-auto" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    <header class="h-12 w-full text-center mx-auto mt-5 border-b-2 border-sky-500">
+    <body class="font-sans max-w-4xl mx-auto bg-gray-900 text-white" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <header class="h-12 w-full text-center mx-auto mt-5 border-b-2 border-sky-500 rounded-t-lg">
         <a href="{% url 'index' %}" class="btn btn-primary mt-4 font-medium text-3xl">My Movies</a>
 
     </header>
     
-    <article>
+    <article class="rounded-lg overflow-hidden shadow-md">
         
         {% block article %}
         
@@ -23,7 +23,7 @@
         <br><br><br><br>
     </article>
 
-    <footer>
+    <footer class="rounded-b-lg">
         <p> Proyecto de ejemplo de la materia Programación Web</p>
         <p><a href="github.com\miusuario\elrepo"> GitHub Repository</a></p>
         
@@ -41,4 +41,3 @@
 
     </body>
 </html>
-
