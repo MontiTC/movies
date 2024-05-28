@@ -8,7 +8,7 @@ import random
 import json
 import os
 
-Authorization = f"Bearer {os.getenv('TOKEN')}"
+Authorization = f"Bearer {os.getenv('MOVIEDBKEY')}"
 
 class Command(BaseCommand):
     # help = "Loads a movie, we assume the database is empty"

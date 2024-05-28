@@ -22,6 +22,10 @@
     </div>
 
 {% endif %}
+{% for movie in movie_list %}
+    {{ movie.title }}
+    {{ forloop.counter }} of {{ movie_list|length }}
+{% endfor %}
 
 <div id="movie-detail">
     <!-- Aquí se cargará la información de la película seleccionada -->

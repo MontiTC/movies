@@ -7,6 +7,7 @@ from .forms import NameForm
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.db.models import Q
+import random
 
 def get_name(request):
     if request.method == "POST":
@@ -34,10 +35,12 @@ def movie_detail(request, movie_id):
     credits = MovieCredit.objects.filter(movie=movie)[:5]
 
     # Fetch recommended movies based on the genres of the current movie
-    genre_ids = [genre.id for genre in movie.genres.all()]
-    recommended_movies = Movie.objects.filter(
-        ~Q(id=movie_id) & (Q(genres__in=movie.genres.all()) | Q(genres__isnull=True))
-    ).distinct().exclude(genres__id__in=[g.id for g in movie.genres.exclude(id__in=genre_ids)])[:8]
+    similar_movies = Movie.objects.filter(
+        ~Q(id=movie_id) &
+        (Q(title__icontains=movie.title) | Q(genres__in=movie.genres.all())
+    )).distinct()
+
+    recommended_movies = random.sample(list(similar_movies), min(10, len(similar_movies)))
 
     if request.method == 'POST':
         form = MovieReviewForm(request.POST)
