@@ -9,6 +9,6 @@ class MovieReviewForm(forms.ModelForm):
         model = MovieReview
         fields = ['rating', 'review']
         widgets = {
-            'rating': forms.NumberInput(attrs={'min': 1, 'max': 100}),
-            'review': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escribe tu reseña aquí...'}),
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 100, 'style': 'background-color: #333;'}),
+            'review': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escribe tu reseña aquí...', 'style': 'background-color: #333;'}),
         }
